@@ -1,2 +1,2 @@
 # CRUD-operations
-Basic CRUD operations unsing local json sever
+Basic CRUD operations using local json sever
