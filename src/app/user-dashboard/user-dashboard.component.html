@@ -1,0 +1,88 @@
+<nav class="navbar navbar-light fixed-top bg-info">
+    <div class="container-fluid">
+        <h2>Angular CRUD</h2>
+        <div class="d-flex">
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onAddBtn()">Add User</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">  
+    <div class="row mt-3">
+        <table class="table mt-5" id="table">
+            <thead>
+                <tr>
+                    <th scope="col">User ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Last</th>
+                    <th scope="col">E-mail ID</th>
+                    <th scope="col">Mobile No.</th>
+                    <th scope="col">Salary</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userData; index as i">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{user.fName}}</td>
+                    <td>{{user.lName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.mob}}</td>
+                    <td>{{user.salary}}</td>
+                    <td>
+                        <button class="btn btn-primary me-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onEdit(user)">Edit</button>
+                        <button class="btn btn-primary" (click)="onDelete(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> 
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="reactForm">
+                <div class="mb-3">
+                  <label for="exampleInput1" class="form-label">First Name</label>
+                  <input type="text" (keypress)="allLetter($event)" formControlName="fName" class="form-control" id="exampleInput1">
+                  <span [style.color]="'red'" *ngIf="formControls['fName'].touched && formControls['fName'].errors?.['required']">! First Name Required</span>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInput2" class="form-label">Last Name</label>
+                  <input type="text" (keypress)="allLetter($event)" class="form-control" formControlName="lName" id="exampleInput2">
+                  <span [style.color]="'red'" *ngIf="formControls['lName'].touched && formControls['lName'].errors?.['required']">! Last Name Required</span>
+                </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email ID</label>
+                    <input type="email" formControlName="email" class="form-control" id="exampleInputemail1" aria-describedby="emailHelp">
+                    <span [style.color]="'red'" *ngIf="formControls['email'].touched && formControls['email'].errors?.['required']">! Email Required</span>
+                    <span [style.color]="'red'" *ngIf="formControls['email'].touched && formControls['email'].errors?.['pattern']">! Invalid Email </span>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInput3" class="form-label">Mobile No.</label>
+                    <input type="text" (keypress)="onlyNumberKey($event)" class="form-control" formControlName="mob" id="exampleInputPassword1" maxlength="10">
+                    <span [style.color]="'red'" *ngIf="formControls['mob'].touched && formControls['mob'].errors?.['required']">! Mobile Required</span>
+                  </div>
+                  <div class="mb-2">
+                    <label for="exampleInput4" class="form-label">Salary</label>
+                    <input type="text" (keypress)="onlyNumberKey($event)" class="form-control" formControlName="salary" id="exampleInputPassword1">
+                    <span [style.color]="'red'" *ngIf="formControls['salary'].touched && formControls['salary'].errors?.['required']">! Salary Required</span>
+                  </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="onAdd()" [ngStyle]="{display : btnDisplay? 'block':'none'}">Add</button>
+          <button type="button" class="btn btn-primary" (click)="updateUserDetails()" [ngStyle]="{display : btnDisplay? 'none':'block'}">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
