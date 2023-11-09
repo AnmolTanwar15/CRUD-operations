@@ -82,13 +82,13 @@ export class UserDashboardComponent {
  }
 
  getAllUser(){
-  this.api.getUser().subscribe(res=>{
-    this.userData=res;
+  this.api.getUser().subscribe((res:any)=>{
+    this.userData=res.data;
   });
  }
 
  onDelete(user:any){
-  this.api.deleteUser(user.id).subscribe(res=>{
+  this.api.deleteUser(user._id).subscribe(res=>{
     alert("User Deleted");
     this.getAllUser();
   })
@@ -96,7 +96,7 @@ export class UserDashboardComponent {
 
  onEdit(user:any){
   this.btnDisplay=false
-  this.userModelObj.id=user.id;
+  this.userModelObj.id=user._id;
   this.reactForm.controls['fName'].setValue(user.fName);
   this.reactForm.controls['lName'].setValue(user.lName);
   this.reactForm.controls['email'].setValue(user.email);
